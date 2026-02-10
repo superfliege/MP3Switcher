@@ -260,6 +260,35 @@
             margin-bottom: 20px;
         }
 
+        .eq-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .eq-reset-btn {
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .eq-reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .eq-reset-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
         .eq-title {
             font-size: 1.5em;
             font-weight: bold;
@@ -570,10 +599,13 @@
         <div class="eq-section">
             <div class="eq-header">
                 <div class="eq-title">🎛️ Parametrischer Equalizer</div>
-                <label class="eq-toggle">
-                    <input type="checkbox" id="eqToggle">
-                    <span class="eq-slider"></span>
-                </label>
+                <div class="eq-controls">
+                    <button class="eq-reset-btn" id="eqResetBtn">🔄 Zurücksetzen</button>
+                    <label class="eq-toggle">
+                        <input type="checkbox" id="eqToggle">
+                        <span class="eq-slider"></span>
+                    </label>
+                </div>
             </div>
 
             <div class="visualizer-container">
@@ -636,8 +668,14 @@
         const visualizer = document.getElementById('visualizer');
         const visCtx = visualizer.getContext('2d');
         const eqToggle = document.getElementById('eqToggle');
+        const eqResetBtn = document.getElementById('eqResetBtn');
 
         // EQ Band Initial Settings (Freq in Hz, Gain in dB)
+        const defaultBands = [
+            { freq: 100, gain: 0, color: '#f5576c' },
+            { freq: 1000, gain: 0, color: '#38ef7d' },
+            { freq: 10000, gain: 0, color: '#4facfe' }
+        ];
         let bands = [
             { freq: 100, gain: 0, color: '#f5576c', x: 0, y: 0 },
             { freq: 1000, gain: 0, color: '#38ef7d', x: 0, y: 0 },
@@ -879,6 +917,31 @@
                 band.gain.value = eqEnabled ? bands[i].gain : 0;
             });
             drawEQ();
+        });
+
+        // EQ Reset Button
+        eqResetBtn.addEventListener('click', () => {
+            // Reset all bands to default values
+            bands.forEach((band, i) => {
+                band.freq = defaultBands[i].freq;
+                band.gain = defaultBands[i].gain;
+            });
+
+            // Update Web Audio filters if they exist
+            if (audioContext && eqBandsA.length > 0 && eqBandsB.length > 0) {
+                bands.forEach((band, i) => {
+                    eqBandsA[i].frequency.value = band.freq;
+                    eqBandsB[i].frequency.value = band.freq;
+                    if (eqEnabled) {
+                        eqBandsA[i].gain.value = band.gain;
+                        eqBandsB[i].gain.value = band.gain;
+                    }
+                });
+            }
+
+            // Update display
+            drawEQ();
+            updateEQInfo();
         });
 
         // Mouse/Touch Events for EQ Canvas
