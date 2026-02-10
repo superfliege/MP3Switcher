@@ -1,7 +1,7 @@
 const CACHE_NAME = 'ab-switcher-v1';
 const urlsToCache = [
-  '/',
-  '/index.html'
+  './',
+  './index.html'
 ];
 
 // Installation
