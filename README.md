@@ -2,6 +2,8 @@
 
 A powerful web-based audio comparison tool that allows seamless switching between two audio versions (A and B) without interruption. Perfect for music producers, sound engineers, and anyone who needs to compare audio mixes while on the go.
 
+Link: https://superfliege.github.io/MP3Switcher/
+
 ## ✨ Features
 
 ### Core Functionality
