@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ab-switcher-v1';
+const CACHE_NAME = 'ab-switcher-v2';
 const urlsToCache = [
   './',
   './index.html'
