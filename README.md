@@ -4,6 +4,9 @@ A powerful web-based audio comparison tool that allows seamless switching betwee
 
 Link: https://superfliege.github.io/MP3Switcher/
 
+<img width="836" height="905" alt="image" src="https://github.com/user-attachments/assets/f4631163-b3c0-4c39-9787-e5b410a03a4b" />
+
+
 ## ✨ Features
 
 ### Core Functionality
